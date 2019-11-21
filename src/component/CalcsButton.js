@@ -7,7 +7,7 @@ export default class CalcsButton extends Component{
         onPress: function(){},
         title:"",
         color:"white",
-        backgroundColor:"black",
+        backgroundColor:"#758CB3",
         style: { },
     }
     constructor(props){

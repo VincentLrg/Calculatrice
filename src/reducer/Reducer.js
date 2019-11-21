@@ -8,15 +8,7 @@ const reducer = (state, action) => {
     // TODO
     switch (action.type) {
         case 'add':
-            return {...state,total: parseFloat(state.number1) + parseFloat(state.number2)};
-        case 'multiply':
-            return {...state,total: parseFloat(state.number1) * parseFloat(state.number2)};
-        case 'number1':
-            return {...state,number1: action.number}
-        case 'number2':
-            return {...state,number2: action.number}
-        case 'reset':
-            return {...initialState}
+            return {...state,display: display + action.number};
         default:
             return state;
     }
@@ -24,19 +16,14 @@ const reducer = (state, action) => {
 
 export const CalculateContext = createContext(initialState);
 
-export class CalculateProvider extends Component {
+export const CalculateProvider = ({ children }) => {
     // création du reducer et des deux proprietes state et dispatch (logique algo)
-    constructor(props){
-        super(props)
-        [this.state, this.dispatch] = useReducer(reducer, initialState);
-    }
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     // Je passe un tableau plus simple à destructurer par la suite
-    render(){
-        return (
-            <CalculateContext.Provider value={[this.state, this.dispatch]}>
-                {children}
-            </CalculateContext.Provider>
-        )
-    }
+    return (
+        <CalculateContext.Provider value={[state, dispatch]}>
+            {children}
+        </CalculateContext.Provider>
+    )
 }

@@ -4,7 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import CalcsButton from './CalcsButton'
 import CalcDisplay from './CalcDisplay'
 
-const initialState = {display: "0"}
+import { CalculateContext } from '../reducer/Reducer';
+
+
+const initialState = {display: "0", start: false}
 
 export default class Container extends Component {
     constructor(props){
@@ -12,15 +15,18 @@ export default class Container extends Component {
         this.state={...initialState}
     }
     addDigit = (number) => {
+      // if(this.state.start == false){
+      //   this.setState(prevState=>({display: "", start: true}))
+      // }
       if(this.state.display.charAt(0) == '0')
       {
-        this.setState({
-          display: this.state.display.slice(1)
-        })
+        this.setState(prevState=>({
+          display: prevState.display.slice(1)
+        }))
       }
-      this.setState({
-        display: this.state.display+number
-      })
+      this.setState(prevState=>({
+          display: prevState.display+number
+      }))
     }
     operator = (operator)=>{
       this.setState({
@@ -29,7 +35,7 @@ export default class Container extends Component {
     }
     equal = ()=> {
       this.setState({
-        display: eval(this.state.display)
+        display: eval(this.state.display).toString()
       })
     }
     del = ()=>{
@@ -55,30 +61,30 @@ export default class Container extends Component {
               <View style={styles.row}>
                 <CalcsButton onPress={()=>this.clear()} title="CLEAR" color="#758CB3" backgroundColor="#D4E4FF" style={{flex:2}}/>
                 <CalcsButton onPress={()=>this.del()} title="DEL" color="#758CB3" backgroundColor="#D4E4FF"/>
-                <CalcsButton onPress={()=>this.operator("/")} title="/" color="white" backgroundColor="#FFC4BA"/>
+                <CalcsButton onPress={()=>this.operator("/")} title="/" backgroundColor="#FFC4BA"/>
               </View>
               <View style={styles.row}>
-                <CalcsButton onPress={()=>this.addDigit("7")}title="7" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.addDigit("8")} title="8" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.addDigit("9")} title="9" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.operator("*")}  title="x" color="white" backgroundColor="#FFC4BA"/>
+                <CalcsButton onPress={()=>this.addDigit("7")} title="7"/>
+                <CalcsButton onPress={()=>this.addDigit("8")} title="8"/>
+                <CalcsButton onPress={()=>this.addDigit("9")} title="9"/>
+                <CalcsButton onPress={()=>this.operator("*")} title="x" backgroundColor="#FFC4BA"/>
               </View>
               <View style={styles.row}>
-                <CalcsButton onPress={()=>this.addDigit("4")} title="4" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.addDigit("5")} title="5" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.addDigit("6")} title="6" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.operator("-")} title="-" color="white" backgroundColor="#FFC4BA"/>
+                <CalcsButton onPress={()=>this.addDigit("4")} title="4"/>
+                <CalcsButton onPress={()=>this.addDigit("5")} title="5"/>
+                <CalcsButton onPress={()=>this.addDigit("6")} title="6"/>
+                <CalcsButton onPress={()=>this.operator("-")} title="-" backgroundColor="#FFC4BA"/>
               </View>
               <View style={styles.row}>
-                <CalcsButton onPress={()=>this.addDigit("1")} title="1" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.addDigit("2")} title="2" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.addDigit("3")} title="3" color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.operator("+")}  title="+" color="white" backgroundColor="#FFC4BA"/>
+                <CalcsButton onPress={()=>this.addDigit("1")} title="1"/>
+                <CalcsButton onPress={()=>this.addDigit("2")} title="2"/>
+                <CalcsButton onPress={()=>this.addDigit("3")} title="3"/>
+                <CalcsButton onPress={()=>this.operator("+")} title="+" backgroundColor="#FFC4BA"/>
               </View>
               <View style={styles.row}>
-                <CalcsButton onPress={()=>this.addDigit("0")} title="0" color="white" backgroundColor="#758CB3" style={{flex:2}}/>
-                <CalcsButton onPress={()=>this.addDigit(".")} title="." color="white" backgroundColor="#758CB3"/>
-                <CalcsButton onPress={()=>this.equal()} title="=" color="white" backgroundColor="#FFC4BA"/>
+                <CalcsButton onPress={()=>this.addDigit("0")} title="0" style={{flex:2}}/>
+                <CalcsButton onPress={()=>this.addDigit(".")} title="."/>
+                <CalcsButton onPress={()=>this.equal()} title="=" backgroundColor="#FFC4BA"/>
               </View>
             </View>
         </View>
