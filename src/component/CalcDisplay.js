@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native'
 
 export default class CalcDisplay extends Component{
-    static defaultProps = {
-        display: "",
+    constructor(props){
+        super(props)
     }
-
     render() {
         return (
             <View style={styles.container}>
